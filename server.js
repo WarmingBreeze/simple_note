@@ -1,3 +1,4 @@
+require('dotenv').config()
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
@@ -11,7 +12,10 @@ app.use(express.static(path.join(__dirname, 'build')));
 app.use(bodyParser.urlencoded({extended: true}));
 
 //DataBase
-mongoose.connect('mongodb+srv://admin-shawn:rosepine890@cluster0.incuboj.mongodb.net/webnoteDB');
+const mongo_Key = process.env.MONGO_KEY;
+
+
+mongoose.connect(`mongodb+srv://admin-shawn:${mongo_Key}@cluster0.incuboj.mongodb.net/webnoteDB`);
 
 const noteSchema = new mongoose.Schema({
     title: String,
