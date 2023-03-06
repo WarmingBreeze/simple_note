@@ -1,7 +1,7 @@
 require('dotenv').config()
 const express = require('express');
 const bodyParser = require('body-parser');
-const cors = require('cors');
+//const cors = require('cors');
 const mongoose = require('mongoose');
 const path = require('path');
 
@@ -25,18 +25,18 @@ const noteSchema = new mongoose.Schema({
 const Note = mongoose.model('Note', noteSchema);
 
 //Dealing with requests
-const corsOptions = {
-    origin: 'http://localhost:3000',
-    optionsSuccessStatus: 200
-};
+// const corsOptions = {
+//     origin: 'http://localhost:3000',
+//     optionsSuccessStatus: 200
+// };
 
-app.options('*', cors());
+//app.options('*', cors());
 
 app.get('/', function (req, res) {
     res.sendFile(path.join(__dirname, 'build', 'index.html'));
   });
 
-app.get('/allNotes', cors(corsOptions), function(req,res) {
+app.get('/allNotes', function(req,res) {
     const queryResult = Note.find({}, function(err, docs){
         if (!err){
             res.send(docs);
@@ -46,7 +46,7 @@ app.get('/allNotes', cors(corsOptions), function(req,res) {
     });
 });
 
-app.post('/writeNote', cors(corsOptions), function(req, res) {
+app.post('/writeNote', function(req, res) {
     req.on('data', function(data){
         const newItem = JSON.parse(data);
         const {newNote} = newItem;
@@ -56,7 +56,7 @@ app.post('/writeNote', cors(corsOptions), function(req, res) {
     });
 });
 
-app.post('/delete', cors(corsOptions), function(req,res){
+app.post('/delete', function(req,res){
     req.on('data', function(data) {
         const target = JSON.parse(data);
         const {sn} = target;
