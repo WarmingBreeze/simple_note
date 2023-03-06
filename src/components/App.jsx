@@ -9,14 +9,14 @@ function App() {
   const [isUpdated, setUpdated] = useState(false);
 
   useEffect(() => {
-      fetch('http://127.0.0.1:9000')
+      fetch('http://127.0.0.1:9000/allNotes')
       .then((response) => response.json())
       .then((data) => setNotes(data));
   }, [isUpdated]);    
 
   
   async function addNote(newNote) {
-    await fetch('http://127.0.0.1:9000', {
+    await fetch('http://127.0.0.1:9000/writeNote', {
       method: 'POST',
       mode: 'cors',
       headers: {

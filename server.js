@@ -2,8 +2,11 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const mongoose = require('mongoose');
+const path = require('path');
 
 const app = express();
+
+app.use(express.static(path.join(__dirname, 'build')));
 
 app.use(bodyParser.urlencoded({extended: true}));
 
@@ -23,9 +26,13 @@ const corsOptions = {
     optionsSuccessStatus: 200
 };
 
-app.options('/', cors());
+app.options('*', cors());
 
-app.get('/', cors(corsOptions), function(req,res) {
+app.get('/', function (req, res) {
+    res.sendFile(path.join(__dirname, 'build', 'index.html'));
+  });
+
+app.get('/allNotes', cors(corsOptions), function(req,res) {
     const queryResult = Note.find({}, function(err, docs){
         if (!err){
             res.send(docs);
@@ -35,7 +42,7 @@ app.get('/', cors(corsOptions), function(req,res) {
     });
 });
 
-app.post('/', cors(corsOptions), function(req, res) {
+app.post('/writeNote', cors(corsOptions), function(req, res) {
     req.on('data', function(data){
         const newItem = JSON.parse(data);
         const {newNote} = newItem;
