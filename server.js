@@ -1,7 +1,6 @@
 require('dotenv').config()
 const express = require('express');
-const bodyParser = require('body-parser');
-//const cors = require('cors');
+const cors = require('cors');
 const mongoose = require('mongoose');
 const path = require('path');
 
@@ -9,12 +8,8 @@ const app = express();
 
 app.use(express.static(path.join(__dirname, 'build')));
 
-app.use(bodyParser.urlencoded({extended: true}));
-
 //DataBase
 const mongo_Key = process.env.MONGO_KEY;
-
-
 mongoose.connect(`mongodb+srv://admin-shawn:${mongo_Key}@cluster0.incuboj.mongodb.net/webnoteDB`);
 
 const noteSchema = new mongoose.Schema({
@@ -25,12 +20,13 @@ const noteSchema = new mongoose.Schema({
 const Note = mongoose.model('Note', noteSchema);
 
 //Dealing with requests
-// const corsOptions = {
-//     origin: 'http://localhost:3000',
-//     optionsSuccessStatus: 200
-// };
+const corsOptions = {
+    origin: 'http://localhost:3000',
+    optionsSuccessStatus: 200
+};
 
-//app.options('*', cors());
+app.options('*', cors());
+app.use(cors());
 
 app.get('/', function (req, res) {
     res.sendFile(path.join(__dirname, 'build', 'index.html'));
