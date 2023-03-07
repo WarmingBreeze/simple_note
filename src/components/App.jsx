@@ -9,14 +9,14 @@ function App() {
   const [isUpdated, setUpdated] = useState(false);
 
   useEffect(() => {
-      fetch('http://127.0.0.1:9000/allNotes')
+      fetch('https://weak-ruby-haddock-toga.cyclic.app/allNotes')
       .then((response) => response.json())
       .then((data) => setNotes(data));
   }, [isUpdated]);    
 
   
   async function addNote(newNote) {
-    await fetch('http://127.0.0.1:9000/writeNote', {
+    await fetch('https://weak-ruby-haddock-toga.cyclic.app//writeNote', {
       method: 'POST',
       mode: 'cors',
       headers: {
@@ -30,7 +30,7 @@ function App() {
   }
 
   async function deleteNote(id) {
-    await fetch('http://127.0.0.1:9000/delete',{
+    await fetch('https://weak-ruby-haddock-toga.cyclic.app/delete',{
       method: 'POST',
       body: JSON.stringify({sn:id}),
     })

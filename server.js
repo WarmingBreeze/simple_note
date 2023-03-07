@@ -21,7 +21,7 @@ const Note = mongoose.model('Note', noteSchema);
 
 //Dealing with requests
 const corsOptions = {
-    origin: 'http://localhost:3000',
+    origin: 'https://weak-ruby-haddock-toga.cyclic.app/',
     optionsSuccessStatus: 200
 };
 
@@ -35,6 +35,7 @@ app.get('/', function (req, res) {
 app.get('/allNotes', function(req,res) {
     const queryResult = Note.find({}, function(err, docs){
         if (!err){
+            console.log(docs);
             res.send(docs);
         } else {
             console.log(err);
