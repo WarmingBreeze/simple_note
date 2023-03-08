@@ -37,7 +37,8 @@ footer p {
   color: #ccc;
 }
 .note {
-  background-color: #fff;
+  background-image: url('cork_board_paper6.png');
+  background-size: 100% 100%;
   border-radius: 7px;
   box-shadow: 0 2px 5px #ccc;
   padding: 10px;
