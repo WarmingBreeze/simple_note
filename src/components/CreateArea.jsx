@@ -12,7 +12,7 @@ function CreateArea(props) {
   const [expand, setExpand] = useState(false);
 
   function expandForm(){
-    setExpand(true);
+    setExpand((preValue) => !preValue);
   }
 
   function handleChange(event) {
@@ -39,20 +39,21 @@ function CreateArea(props) {
   return (
     <div>
       <form className="create-note">
-        {expand && <input
+        <input
+          onClick={expandForm}
+          id="title"
           name="title"
           onChange={handleChange}
           value={note.title}
-          placeholder="Title"
-        />}
-        <textarea
+          placeholder="Write a title"
+        />
+        {expand && <textarea
           name="content"
-          onClick={expandForm}
           onChange={handleChange}
           value={note.content}
           placeholder="Take a note..."
-          rows={expand? 3: 1}
-        />
+          rows={3}
+        />}
         <Zoom in={expand}>
           <Fab onClick={submitNote}>
             <AddCircleOutlineIcon/>
