@@ -5,8 +5,12 @@ import Note from "./Note";
 import CreateArea from "./CreateArea";
 
 function App() {
+  //note related
   const [notes, setNotes] = useState([]);
   const [isUpdated, setUpdated] = useState(false);
+
+  //dark mode
+  const [isDark, setDark] = useState(false);
 
   useEffect(() => {
       fetch('https://weak-ruby-haddock-toga.cyclic.app/allNotes')
@@ -14,7 +18,16 @@ function App() {
       .then((data) => setNotes(data));
   }, [isUpdated]);    
 
-  
+  function darkModeSwitch(){
+    setDark((preValue) => !preValue);
+    if (isDark) {
+      document.getElementsByTagName('body')[0].style.backgroundColor='#eee';
+    } else {
+      document.getElementsByTagName('body')[0].style.backgroundColor='#3F4E4F';
+    }
+  }
+
+
   async function addNote(newNote) {
     await fetch('https://weak-ruby-haddock-toga.cyclic.app//writeNote', {
       method: 'POST',
@@ -41,9 +54,13 @@ function App() {
 
   return (
     <div>
-      <Header />
+      <Header  
+        bgColor={isDark? {backgroundColor: '#2C3639'}:{backgroundColor: '#f5ba13'}}
+        darkMode={darkModeSwitch}
+        isDark={isDark}
+      />
       <CreateArea onAdd={addNote} />
-      <div className="note-section">
+      <div className='note-section'>
       {notes.map((noteItem) => {
         return (
           <Note
