@@ -53,6 +53,21 @@ app.post('/writeNote', function(req, res) {
     });
 });
 
+app.post('/updateNote', function(req, res){
+    req.on('data', function(data){
+        const updatedItem = JSON.parse(data);
+        const {id, updatedNote} = updatedItem;
+        Note.findByIdAndUpdate(id,updatedNote, function(err, docs){
+            if (!err) {
+                res.send(docs.id);
+            } else {
+                console.log(err);
+            }
+        });
+        
+    })
+})
+
 app.post('/delete', function(req,res){
     req.on('data', function(data) {
         const target = JSON.parse(data);

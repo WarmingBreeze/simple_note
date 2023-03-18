@@ -14,7 +14,15 @@ function Header(props) {
         className="darkmode-icon"
         onClick={()=>{props.darkMode()}}  
       >
-        {props.isDark? <WbSunnyIcon/>: <DarkModeIcon/>}
+        {props.isDark? <WbSunnyIcon
+          sx={{
+            fontSize: '2rem'
+          }}
+        />: <DarkModeIcon
+          sx={{
+            fontSize: '2rem'
+          }}
+        />}
       </div>
       
     </header>
